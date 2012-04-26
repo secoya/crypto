@@ -38,7 +38,7 @@ Given a PKCS #12 keystore the library can extract the private key and sign any m
 try {
 	$keyStore = PKCS12::initFromFile('path/to/keystore.pkcs12');
 	$keyStore->unlock('keystore passphrase');
-	$signature = $keyStore->privateKey->sign($normalizedParameters);
+	$signature = $keyStore->privateKey->sign($message);
 } catch(KeyStoreDecryptionFailedException $e) {
 	die('Wrong passphrase.');
 }
@@ -47,7 +47,7 @@ return $signature;
 
 ### Verifying a signature ###
 
-To verify a signature against a string you simply need the X509Certificate holding the public key that corresponds to the private key the string was signed with.
+To verify a signature against a message you simply need the X509Certificate holding the public key that corresponds to the private key the message was signed with.
 
 ```php
 <?php
