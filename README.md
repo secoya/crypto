@@ -40,7 +40,7 @@ try {
 	$keyStore->unlock('keystore passphrase');
 	$signature = $keyStore->privateKey->sign($normalizedParameters);
 } catch(KeyStoreDecryptionFailedException $e) {
-	die('Wring passphrase.');
+	die('Wrong passphrase.');
 }
 return $signature;
 ```
