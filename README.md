@@ -29,15 +29,15 @@ after an operation, the library does this for you and throws an exception if som
 Simple example
 --------------
 
-### Signing with a private key ###
+### Signing with a private key from a keystore ###
 
 Given a PKCS #12 keystore the library can extract the private key and sign any message with it, returning the signature:
 
 ```php
 <?php
 try {
-	$keyStore = PKCS12::initFromFile('path/to/keystore.pkcs12');
-	$keyStore->unlock('keystore passphrase');
+	$passphrase = 'keystore passphrase';
+	$keyStore = PKCS12::initFromFile('path/to/keystore.pkcs12', $passphrase);
 	$signature = $keyStore->privateKey->sign($message);
 } catch(KeyStoreDecryptionFailedException $e) {
 	die('Wrong passphrase.');
@@ -59,4 +59,21 @@ if($valid) {
 } else {
 	echo 'Signature is invalid';
 }
+```
+
+
+
+### Signing with an openssh private key ###
+
+OpenSSH private keys are also handled by this library.
+```php
+<?php
+try {
+	$passphrase = 'private key passphrase';
+	$privateKey = PrivateKey::initFromFile('~/.ssh/id_rsa', $passphrase);
+	$signature = $privateKey->sign($message);
+} catch(PrivateKeyDecryptionFailedException $e) {
+	die('Wrong passphrase.');
+}
+return $signature;
 ```

@@ -1,4 +1,4 @@
 <?php
-class CertificateParsingFailedException extends RuntimeException {
+class CertificateParsingFailedException extends Exception {
 	
 }

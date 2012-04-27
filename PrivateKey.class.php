@@ -8,10 +8,29 @@ class PrivateKey {
 	 * since we need the binary format as well.
 	 * @param string $privateKey
 	 */
-	public function __construct($privateKey) {
+	public function __construct($privateKey, $passphrase = '') {
 		if(!extension_loaded('openssl'))
 			throw new OpenSSLExtensionNotLoadedException('The openssl module is not loaded.');
-		$this->keyResource = openssl_pkey_get_private($privateKey);
+		
+		$this->keyResource = openssl_pkey_get_private($privateKey, $passphrase);
+		if($this->keyResource === false)
+			throw new PrivateKeyDecryptionFailedException(
+				'Could not decrypt the private key, the passphrase is incorrect, '.
+				'its contents are mangled or it is not a valid private key.');
+	}
+	
+	/**
+	 * Initialize the private key from a file.
+	 * @param string $privatekeyLocation
+	 * @throws FileNotFoundException
+	 * @throws FileNotReadableException
+	 */
+	public static function initFromFile($privatekeyLocation, $passphrase) {
+		if(!file_exists($privatekeyLocation))
+			throw new FileNotFoundException("The private key file '$privatekeyLocation' does not exist.");
+		if(!is_readable($privatekeyLocation))
+			throw new FileNotReadableException("The private key file '$privatekeyLocation' is not readable.");
+		return new self(file_get_contents($privatekeyLocation), $passphrase);
 	}
 	
 	/**
@@ -43,11 +62,9 @@ class PrivateKey {
 	
 	/**
 	 * Frees the resource associated with this private key.
-	 * This is automatically done on destruct. It can be invoked manually,
-	 * if you want to make sure it can't be accessed from anywhere else,
-	 * even though there is still a reference to it.
+	 * This is automatically done on destruct.
 	 */
-	public function free() {
+	private function free() {
 		if($this->keyResource)
 			openssl_pkey_free($this->keyResource);
 		$this->keyResource = null;

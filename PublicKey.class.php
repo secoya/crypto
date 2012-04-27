@@ -40,6 +40,5 @@ class PublicKey {
 	public function __destruct() {
 		if($this->keyResource)
 			openssl_free_key($this->keyResource);
-		$this->keyResource = null;
 	}
 }

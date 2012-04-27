@@ -1,4 +1,4 @@
 <?php
-class KeyStoreDecryptionFailedException extends RuntimeException {
+class KeyStoreDecryptionFailedException extends DecryptionFailedException {
 	
 }

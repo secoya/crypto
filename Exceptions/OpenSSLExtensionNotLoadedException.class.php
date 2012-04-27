@@ -1,4 +1,4 @@
 <?php
-class OpenSSLExtensionNotLoadedException extends RuntimeException {
+class OpenSSLExtensionNotLoadedException extends Exception {
 	
 }

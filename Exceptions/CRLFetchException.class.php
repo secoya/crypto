@@ -1,4 +1,4 @@
 <?php
-class CRLFetchException extends RuntimeException {
+class CRLFetchException extends Exception {
 	
 }
