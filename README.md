@@ -1,24 +1,18 @@
 Certificate library
 =====================
 
-This library wraps the php openssl extension, allowing you to handle PKCS #12 keystores
-in an object oriented way.
+This library wraps the php openssl extension, allowing you to handle
+PKCS #12 keystores, X509 Certificates and OpenSSH keys in an object oriented way.
 
 Functionality
 -------------
 
-Handling PKCS #12 keystores requires other features as well.
-You can initialize X509 certificates using a base64 encoded string:
-```php
-<?php
-$pemCert = 'base64 encoded string';
-$certificate =  new X509Certificate($pemCert);
-```
-The certificate revocation list can be checked quite easily:
-```php
-<?php
-$certificate->checkCRL(array('path/to/intermediate_certificates'));
-```
+* PKCS #12 keystore handling
+* X509 certificate information
+* CRL check
+* PrivateKey de/encryption
+* Check signatures
+
 
 ### Exceptions ###
 ----------
@@ -76,4 +70,18 @@ try {
 	die('Wrong passphrase.');
 }
 return $signature;
+```
+
+
+### Initialize X509 certificates using a base64 encoded string ###
+```php
+<?php
+$pemCert = 'base64 encoded string';
+$certificate =  new X509Certificate($pemCert);
+```
+
+### Check the certificate revocation list ###
+```php
+<?php
+$certificate->checkCRL(array('path/to/intermediate_certificates'));
 ```
