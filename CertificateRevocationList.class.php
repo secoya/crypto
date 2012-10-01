@@ -35,7 +35,7 @@ class CertificateRevocationList {
 	 */
 	public function __construct($URI) {
 		$this->URI = $URI;
-		$this->localPath = sys_get_temp_dir().sha1(getenv('home').$this->URI).'.crl';
+		$this->localPath = sys_get_temp_dir().DIRECTORY_SEPARATOR.sha1(getenv('home').$this->URI).'.crl';
 	}
 	
 	public function __get($name) {
@@ -171,7 +171,7 @@ End;
 		$pemFileName = '';
 		foreach($crls as $crl)
 			$pemFileName .= sha1($crl->localPath);
-		$pemFileName = sys_get_temp_dir().sha1($pemFileName).'.pem';
+		$pemFileName = sys_get_temp_dir().DIRECTORY_SEPARATOR.sha1($pemFileName).'.pem';
 		/* If there already is a PEM file for those specific CRLs, check if it is stale.
 		 * Remove it if it is, otherwise just return that. */
 		if(file_exists($pemFileName)) {
