@@ -160,7 +160,7 @@ End;
 		if(false === $remoteContents = file_get_contents($this->URI))
 			throw new CRLFetchException("Unable to fetch the CRL at $this->URI");
 		if(file_put_contents($this->localPath, $remoteContents) === false)
-			throw new CRLFetchException("Could not write the contents of the remote CRL to the local copy.");
+			throw new CRLWriteException("Could not write the contents of the remote CRL to the local copy.");
 	}
 	
 	/**
