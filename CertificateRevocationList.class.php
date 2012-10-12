@@ -35,7 +35,7 @@ class CertificateRevocationList {
 	 */
 	public function __construct($URI) {
 		$this->URI = $URI;
-		$this->localPath = sys_get_temp_dir().DIRECTORY_SEPARATOR.sha1(getenv('home').$this->URI).'.crl';
+		$this->localPath = sys_get_temp_dir().DIRECTORY_SEPARATOR.sha1(getenv('HOME').$this->URI).'.crl';
 	}
 	
 	public function __get($name) {
